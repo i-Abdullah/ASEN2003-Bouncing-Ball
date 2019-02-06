@@ -117,7 +117,7 @@ e_height(i) = ( Height_firstbounce(i) / h0_inches ) ^ ( 1 / ( 2 )) ;
 e_height_2(i) = ( Height_secondboune(i) / Height_firstbounce(i) ) ^ ( 1 / ( 4 )) ;
 
 Error_height(i) = double(sqrt ( ((Partial_height_hn(Height_firstbounce(i),h0_inches,1) * Height_error ))^2 + ((Partial_height_h0(Height_firstbounce(i),h0_inches,1) * h0_error))^2 ));
-Error_height_2(i) = double(sqrt ( ((Partial_height_hn(Height_secondboune(i), Height_firstbounce(i),1) * Height_secondbounce_std ))^2 + ((Partial_height_h0(Height_secondboune(i), Height_firstbounce(i),1) * Height_firstbounce_std))^2 ));
+Error_height_2(i) = double(sqrt ( ((Partial_height_hn(Height_secondboune(i), Height_firstbounce(i),2) * Height_secondbounce_std ))^2 + ((Partial_height_h0(Height_secondboune(i), Height_firstbounce(i),2) * Height_firstbounce_std))^2 ));
 
 
 end
