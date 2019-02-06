@@ -46,24 +46,25 @@ syms h0 ts hn tn tn_1 hn_1 tn n
 % hn_1 tn_1 is previous height, and time
 
 e_stop_error(h0,ts) = (ts - sqrt((2*h0)/g))/(ts + sqrt((2*h0)/g));
-
 e_height_error(hn,h0,n) = (hn/h0)^(1/(2*n)) ;
-
 e_bonces_error(tn,tn_1) = ( tn / tn_1 ) ; 
 
 
-%% error analysis : derivatives: e_Stop
+%% e : time to stop
 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% error analysis : derivatives: e_Stop
 
 %partial of e_stop with respect to h0;
 Partial_stop_h0 = diff(e_stop_error,h0);
 Partial_stop_ts = diff(e_stop_error,ts);
 
 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-%% e : time to stop
-
+% do the math!
 
 for i=1:length(Trial)
     
@@ -72,17 +73,20 @@ Error_stop(i) = double(sqrt ( ((Partial_stop_h0(h0_inches,TotalTime(i)) * h0_err
 
 end
 
-%% error analysis : derivatives: e_bounces
+%% e : time of bounce
 
+% error analysis : derivatives: e_bounces
+
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 %partial of e_bouncs with respect to tn, tn_1;
+
 Partial_bounces_tn = diff(e_bonces_error,tn);
 Partial_bounces_tn_1 = diff(e_bonces_error,tn_1);
 
 
-
-
-%% e : time of bounce
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 for i=1:length(Trial)
@@ -92,16 +96,17 @@ Error_bouncs(i) = double(sqrt ( ((Partial_bounces_tn(Bounce2_Time(i),Bounce1_Tim
 
 end
 
-%% error analysis : derivatives: e_height
+%% e : height of bounce
 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% error analysis : derivatives: e_height
 
 %partial of e_height with respect to tn, tn_1;
 Partial_height_hn = diff(e_height_error,hn);
 Partial_height_h0 = diff(e_height_error,h0);
 
-
-
-%% e : height of bounce
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 for i=1:length(Trial)
     
@@ -121,6 +126,8 @@ end
 %% plot error
 
 
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 figure(1)
 
 errorbar([1:length(Trial)],e_height_2,Error_height_2,'-*')
@@ -134,4 +141,6 @@ xlabel('Trial')
 title('Coefficient of restitution and error')
 legend('e_h_e_i_g_h_t','e_b_o_u_n_c_e_s','e_s_t_o_p','Location','SouthEast')
 
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
