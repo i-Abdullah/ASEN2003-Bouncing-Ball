@@ -4,6 +4,14 @@
 % and also a tennis ball using an improved method, which depends on using audio waves to 
 % estimate the time between bounces and total time it took the ball to stop
 
+% Done by:
+% 
+% - Sarah Foley
+% - Hugo Stetz
+% - Alexander Lowry
+% - Abdulla Al Ameri
+
+
 
 %% read data
 
@@ -41,7 +49,7 @@ time_total_error_golf = sqrt ( (random_error_golf)^2 + (inst_error_golf)^2 ) ;
 h0_inches = 36 ; %inches.
 g = 386.09 ; % gravity in inches/s^2
 
-h0_error = 1/4 ; % the same for all trials
+h0_error = 1/14 ; % the same for all trials
 
 
 %% calculating e:

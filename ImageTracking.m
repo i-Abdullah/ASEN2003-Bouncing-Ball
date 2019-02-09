@@ -2,6 +2,13 @@
 % this script is to estimate the coefficient of restitution of a ball using
 % an image trackign software.
 
+% Done by:
+% 
+% - Sarah Foley
+% - Hugo Stetz
+% - Alexander Lowry
+% - Abdulla Al Ameri
+
 
 %% import data:
 
@@ -68,8 +75,8 @@ e_height_8 = ( hn_Data8 / h0_trial_8 ) ^ ( 1 / ( 2 )) ;
 %% error analysis : all error sources
 
 % error from instrument
-h0_error_insturment = 1/4 ; % the same for all trials
-hn_error_insturment = 1/4 ; % 1/4 inche is our error from height, eyeballed from the video
+h0_error_insturment = 1/14 ; % the same for all trials
+hn_error_insturment = 1/14 ; % 1/4 inche is our error from height, eyeballed from the video
 
 % random error
 

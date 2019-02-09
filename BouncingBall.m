@@ -1,5 +1,16 @@
 %% info
 
+% this script is part of CU's SP 18, 2003: Dynamics
+% lab to study the coefficient of restitution for balls, mainly a Ping Pong
+% ball. Data are stored in folder /Data in xcel file.
+% 
+% Done by:
+%
+% - Sarah Foley
+% - Hugo Stetz
+% - Alexander Lowry
+% - Abdulla Al Ameri
+
 
 %% get data
 
@@ -29,9 +40,9 @@ g = 386.09 ; % gravity in inches/s^2
 
 
 % error from instrument
-h0_error = 1/4 ; % the same for all trials
+h0_error = 1/14 ; % the same for all trials
 TotalTime_error = 0.5 ; % changes per trial
-Height_error = 1/4 ; % 1/4 inche is our error from height, eyeballed from the video
+Height_error = 1/14 ; % 1/4 inche is our error from height, eyeballed from the video
 Time_error_each_bounce = 0.05; %
 
 % random error
