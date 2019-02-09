@@ -130,3 +130,15 @@ xticks([ 1 2 3 ])
 xticklabels({'Trial 1','Trial 7','Trial 8'})
 xlim([ 0.5 3.5])
 ylabel('Coefficient of restitution (unitless)')
+
+
+%% printout resutls
+
+fprintf('e_height_1: %0.3f',e_height_1 );
+fprintf(' ± %0.4f \n', total_error_Data1 );
+
+fprintf('e_height_7: %0.3f',e_height_7 );
+fprintf(' ± %0.4f \n', total_error_Data7 );
+
+fprintf('e_height_8: %0.3f',e_height_8 );
+fprintf(' ± %0.4f \n', total_error_Data8 );
