@@ -10,9 +10,9 @@ clc
 close all;
 
 
-Data1 = xlsread('ImageTracking/Trial_1_Data_Image_Tracking.xlsx');
-Data7 = xlsread('ImageTracking/Trial_7_Data_Image_Tracking.xlsx');
-Data8 = xlsread('ImageTracking/Trial_8_Data_Image_Tracking.xlsx');
+Data1 = xlsread('Data/Trial_1_Data_Image_Tracking.xlsx');
+Data7 = xlsread('Data/Trial_7_Data_Image_Tracking.xlsx');
+Data8 = xlsread('Data/Trial_8_Data_Image_Tracking.xlsx');
 
 Data1(1,:) = [];
 

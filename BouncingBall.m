@@ -8,7 +8,7 @@ clc
 close all
 
 % read data
-Data = xlsread('ExperimentalData.xlsx');
+Data = xlsread('Data/ExperimentalData.xlsx');
 
 Trial = Data(:,1); % trial number
 Bounce1_Time = Data(:,2); % time between the first two bounces
