@@ -27,18 +27,31 @@ g = 386.09 ; % gravity in inches/s^2
 
 %% error analysis : all error sources
 
-h0_error = 1/4 ; % the same for all trials
-TotalTime_error = 1/30 ; % changes per trial
-Height_error = 1/4 ; % 1/14 inche is our error from height, eyeballed from the video
-Time_error_each_bounce = 1/60; %using the same thing
 
-% alternative method for error:
+% error from instrument
+h0_error = 1/4 ; % the same for all trials
+TotalTime_error = 0.5 ; % changes per trial
+Height_error = 1/4 ; % 1/4 inche is our error from height, eyeballed from the video
+Time_error_each_bounce = 0.05; %
+
+% random error
 
 Height_firstbounce_std = std(Height_firstbounce);
 Height_secondbounce_std = std(Height_secondboune);
-Error_time_values_std = std(Error_time_values)+0.5; %std + 0.5 time to reaction?
+Error_time_values_std = std(Error_time_values); %std + 0.5 time to reaction?
 Bounce1_Time_std = std(Bounce1_Time);
 Bounce2_Time_std = std(Bounce2_Time);
+
+% total error:
+
+Height_firstbounce_total_error = sqrt ( (Height_firstbounce_std).^2 + (Height_error).^2 );
+Height_secondbounce_total_error = sqrt ( (Height_secondbounce_std).^2 + (Height_error).^2);
+time_values_total_error = sqrt ( (Error_time_values_std).^2 + (TotalTime_error).^2);
+Bounce1_Time_total_error = sqrt ( (Time_error_each_bounce).^2 + (Bounce1_Time_std).^2);
+Bounce2_Time_total_error = sqrt ( (Time_error_each_bounce).^2 + (Bounce2_Time_std).^2);
+h0_total_error = sqrt ( h0_error^2 + Height_error^2 ) ;
+
+
 %% error analysis : functions
 
 
@@ -69,7 +82,7 @@ Partial_stop_ts = diff(e_stop_error,ts);
 for i=1:length(Trial)
     
 e_stop(i) = (TotalTime(i) - sqrt((2*h0_inches)/g))/(TotalTime(i) + sqrt((2*h0_inches)/g));
-Error_stop(i) = double(sqrt ( ((Partial_stop_h0(h0_inches,TotalTime(i)) * h0_error ))^2 + ((Partial_stop_ts(h0_inches,TotalTime(i)) * Error_time_values_std)))^2 );
+Error_stop(i) = double(sqrt ( ((Partial_stop_h0(h0_inches,TotalTime(i))) * h0_total_error ).^2 + (((Partial_stop_ts(h0_inches,TotalTime(i))) * time_values_total_error).^2) ));
 
 end
 
@@ -92,7 +105,7 @@ Partial_bounces_tn_1 = diff(e_bonces_error,tn_1);
 for i=1:length(Trial)
     
 e_bounces(i) = Bounce2_Time(i) / Bounce1_Time(i) ;
-Error_bouncs(i) = double(sqrt ( ((Partial_bounces_tn(Bounce2_Time(i),Bounce1_Time(i)) * Bounce2_Time_std )).^2 + ((Partial_bounces_tn_1(Bounce2_Time(i),Bounce1_Time(i)) * Bounce1_Time_std)).^2) );
+Error_bounces(i) = double(sqrt ( ((Partial_bounces_tn(Bounce2_Time(i),Bounce1_Time(i)) * Bounce2_Time_total_error )).^2 + ((Partial_bounces_tn_1(Bounce2_Time(i),Bounce1_Time(i)) * Bounce1_Time_total_error)).^2) );
 
 end
 
@@ -116,8 +129,8 @@ for i=1:length(Trial)
 e_height(i) = ( Height_firstbounce(i) / h0_inches ) ^ ( 1 / ( 2 )) ;
 e_height_2(i) = ( Height_secondboune(i) / Height_firstbounce(i) ) ^ ( 1 / ( 4 )) ;
 
-Error_height(i) = double(sqrt ( ((Partial_height_hn(Height_firstbounce(i),h0_inches,1) * Height_error ))^2 + ((Partial_height_h0(Height_firstbounce(i),h0_inches,1) * h0_error))^2 ));
-Error_height_2(i) = double(sqrt ( ((Partial_height_hn(Height_secondboune(i), Height_firstbounce(i),2) * Height_secondbounce_std ))^2 + ((Partial_height_h0(Height_secondboune(i), Height_firstbounce(i),2) * Height_firstbounce_std))^2 ));
+Error_height(i) = double(sqrt ( ((Partial_height_hn(Height_firstbounce(i),h0_inches,1) * Height_error ))^2 + ((Partial_height_h0(Height_firstbounce(i),h0_inches,1) * h0_total_error))^2 ));
+Error_height_2(i) = double(sqrt ( ((Partial_height_hn(Height_secondboune(i), Height_firstbounce(i),2) * Height_secondbounce_total_error ))^2 + ((Partial_height_h0(Height_secondboune(i), Height_firstbounce(i),2) * Height_firstbounce_total_error))^2 ));
 
 
 end
@@ -130,16 +143,29 @@ end
 
 figure(1)
 
-errorbar([1:length(Trial)],e_height_2,Error_height_2,'-*')
+errorbar([1:length(Trial)],e_height,Error_height_2,'-*')
 hold on
-errorbar([1:length(Trial)],e_bounces,Error_bouncs,'-o')
+errorbar([1:length(Trial)],e_bounces,Error_bounces,'-o')
 hold on
 errorbar([1:length(Trial)],e_stop,Error_stop,'-^')
 grid minor
 ylabel('Coefficient of restitution (unitless)')
 xlabel('Trial')
 title('Coefficient of restitution and error')
+xlim([0.5 10.5])
 legend('e_h_e_i_g_h_t','e_b_o_u_n_c_e_s','e_s_t_o_p','Location','SouthEast')
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+fprintf('e_stop: %0.3f',mean(e_stop) );
+fprintf(' ± %0.3f \n', mean(Error_stop) );
+
+fprintf('e_height: %0.3f',mean(e_height) );
+fprintf(' ± %0.3f \n', mean(Error_height_2) );
+
+fprintf('e_bounces: %0.3f',mean(e_bounces) );
+fprintf(' ± %0.3f \n', mean(Error_bounces) );
+
 
 
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
