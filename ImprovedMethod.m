@@ -39,8 +39,8 @@ random_error_golf = std(time_golf);
 % cut-off, this method is really really accurate, so we can take this error
 % to be a very small fraction of a second!
 
-inst_error_pong = 0.00001 ;
-inst_error_golf = 0.00001 ;
+inst_error_pong = 0.001 ;
+inst_error_golf = 0.001 ;
 
 
 time_total_error_pong = sqrt ( (random_error_pong)^2 + (inst_error_pong)^2 ) ;

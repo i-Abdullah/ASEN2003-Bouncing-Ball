@@ -41,10 +41,9 @@ g = 386.09 ; % gravity in inches/s^2
 
 % error from instrument
 h0_error = 1/14 ; % the same for all trials
-TotalTime_error = 0.5 ; % changes per trial
+TotalTime_error = 0.17; % changes per trial
 Height_error = 1/14 ; % 1/4 inche is our error from height, eyeballed from the video
-Time_error_each_bounce = 0.05; %
-
+Time_error_each_bounce = 0.17;
 % random error
 
 Height_firstbounce_std = std(Height_firstbounce);
